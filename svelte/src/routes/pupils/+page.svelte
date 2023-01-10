@@ -65,7 +65,7 @@ alert(res.data.message)
                       <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
                         <input type="url" id="img" name="img" bind:value={img} class="form-control" />
-                        <label class="form-label" for="url">Enter your url to your foto:</label>
+                        <label class="form-label" for="url">Enter your url to your photo:</label>
                       </div>
                     </div>
                     <div class="d-flex flex-row align-items-center mb-4">
