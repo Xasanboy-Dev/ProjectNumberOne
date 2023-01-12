@@ -14,9 +14,9 @@
 
     // Redirect to Login page 
 
-    throw redirect(307,"/register")
+    // throw redirect(307,"/register")
    }else{
-    alert()
+    alert(res.data.message)
    }
     })
   }else{

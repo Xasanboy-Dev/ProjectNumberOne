@@ -5,6 +5,7 @@
  let password:any;
  let lastname:any;
  function click(){
+  alert("Hello World")
   if(name!==undefined && email!==undefined && password!==undefined){
  axios.post("http://localhost:8080/login",{name,email,password,lastname})
  .then(res=>{
@@ -58,7 +59,7 @@
         </div>
       
         <!-- Submit button -->
-       <div class="d-flex justify-content-center"> <button type="button" class="btn btn-primary btn-block mb-4" on:click={()=>click()}>Sign in</button></div>
+       <div class="d-flex justify-content-center"> <button type="button" class="btn btn-primary btn-block mb-4" ><a href="/user" on:click={()=>click()}>Sign in</a> </button></div>
       
         <!-- Register buttons -->
         <div class="text-center">
