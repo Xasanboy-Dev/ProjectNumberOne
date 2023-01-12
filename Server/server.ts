@@ -32,6 +32,14 @@ server.post("/users", async (req: Request, res: Response) => {
 })
 let arr: any
 
+server.post('/country', (req: Request, res: Response) => {
+    try {
+        console.log(req.body)
+    } catch (error: any) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 server.post('/login', async (req: Request, res: Response) => {
     try {
         const { name, lastname, email, password } = req.body
