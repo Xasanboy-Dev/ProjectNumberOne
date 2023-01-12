@@ -19,15 +19,27 @@ server.get('/', (req: Request, res: Response) => {
 server.post("/users", async (req: Request, res: Response) => {
     try {
         const { name, lastname, email, password } = req.body
-        if (name !== undefined && lastname !== undefined && email !== undefined && password !== undefined) {
-            const user = (await pool.query(`SELECT * FROM users WHERE name = $1 AND lastname = $2 AND email = $3 AND password = $4`, [name, lastname, email, password])).rows
-            if (user.length == 0) {
-                (await pool.query(`INSERT INTO users (name,lastname,email,password) VALUES ($1,$2,$3,$4)`, [name, lastname, email, password])).rows
-            } else {
-                res.status(204).json({ message: "You have already registered!" })
-            }
+        const user = (await pool.query(`SELECT * FROM users WHERE name = $1  AND lastname = $2 AND email = $3 AND lastname = $4`, [name, lastname, email, password])).rows
+        if (user.length == 0) {
+            await pool.query(`INSERT INTO users (name,lastname,email,password) VALUES ($1,$2,$3,$4)`, [name, lastname, email, password])
+            res.status(201).json({ message: "Created!" })
         } else {
-            res.status(200).json({ message: "You must fill all th gaps!" })
+            res.status(200).json({ message: "Your account is already exist!" })
+        }
+    } catch (error: any) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
+
+server.post('/login', async (req: Request, res: Response) => {
+    try {
+        const { name, lastname, email, password } = req.body
+        const user = (await pool.query(`SELECT * FROM users WHERE name = $1 AND lastname = $2 AND email = $3 AND password = $4`, [name, lastname, email, password])).rows
+        if (user.length == 1) {
+            return res.status(200).json({ message: user })
+        } else {
+            res.status(201).json({ message: "Not Found. Please check your answers!" })
         }
     } catch (error: any) {
         res.status(500).json({ message: error.message })

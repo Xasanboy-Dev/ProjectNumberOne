@@ -1,13 +1,7 @@
-<script lang="ts">
-  import axios from "axios"
-  let arr:any
-  axios.get("http://localhost:8080")
-  .then(res=>{
-arr =  res.data.message
-  })
-  </script>
-  <main>
- <h1>Regitration to <a href="/teachers">Teacher</a></h1>
- <h1>Regitration to <a href="/pupils">Pupils</a></h1>
-<h1>Clock on to <a href="/login">login</a></h1>
-</main>
+<div class="d-flex justify-content-start px-5 mx-5  fs-1">
+<a href="/"><i class="bi text-primary bi-house"></i></a>
+</div>
+<div class='d-flex justify-content-center gap-5'>
+<h1>Hello Bor!</h1>
+<h1>You can <a href="/register">register</a> in here and you can <a href="/login">login</a>in here </h1>
+</div>
