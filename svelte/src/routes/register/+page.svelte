@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { redirect } from "@sveltejs/kit";
     import axios from "axios"
     let name:any
     let lastname:any
@@ -8,19 +7,17 @@
     function click(){
   if(name!==undefined && lastname!==undefined && email!==undefined && password!==undefined){
     axios.post("http://localhost:8080/users",{name,lastname,email,password})
-    .then(res=>{
-   if(res.status==201){
-    alert(res.data.message)
-
-    // Redirect to Login page 
-
-    // throw redirect(307,"/register")
-   }else{
-    alert(res.data.message)
-   }
-    })
+   .then(res=>{
+    if(res.status==201){
+     alert(res.data.message)
+     window.location.href = "http://localhost:5173/login"
   }else{
-    alert("Please fill all gaps!")
+    alert("Your account is already exist. Please go to the login page")
+  window.location.href = "http://localhost:5173/login"
+  }
+  })
+  }else{
+    alert("Please fill all the gaps.")
   }
     }
 </script>
@@ -60,7 +57,7 @@
                             <label class="form-label" for="form3Example3c">Your Email</label>
                           </div>
                         </div>
-      
+                        
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">

@@ -5,23 +5,22 @@
  let password:any;
  let lastname:any;
  function click(){
-  alert("Hello World")
   if(name!==undefined && email!==undefined && password!==undefined){
- axios.post("http://localhost:8080/login",{name,email,password,lastname})
+ axios.post('http://localhost:8080/login',{name,lastname,email,password})
  .then(res=>{
-  if(res.status==200){
-      console.log(res.data.message)
-    
-    // Redirect to User page
-    
-  }else{
-    alert(res.data.message)
-  }
-})
-}else{
-    alert("Please fill all the gaps.")
-  }
+ if(res.status==200){
+  window.location.href = "http://localhost:5173/user"
+ }else{
+  alert("Please check your data! Then try again.")
  }
+})
+}
+}
+function sent(){
+  if(email==undefined){
+    alert("Please fill your email and then we can send a code.😕😕")
+  }
+}
 </script>
 <div class="d-flex justify-content-start px-5 mx-5  fs-1">
     <a href="/"><i class="bi text-primary bi-house"></i></a>
@@ -54,16 +53,16 @@
       
           <div class="col d-flex justify-content-center">
             <!-- Simple link -->
-            <a href="/forget">Forgot password?</a>
+            <p style="cursor: pointer;font-size:small" on:click={()=>sent()} class='btn border-1 border-dark text-primary'>Forgot password?</p>
           </div>
         </div>
       
         <!-- Submit button -->
-       <div class="d-flex justify-content-center"> <button type="button" class="btn btn-primary btn-block mb-4" ><a href="/user" on:click={()=>click()}>Sign in</a> </button></div>
+       <div class="d-flex justify-content-center"> <button type="button" class="btn btn-primary btn-block mb-4" on:click={()=>click()}>Sign in</button></div>
       
         <!-- Register buttons -->
         <div class="text-center">
-          <p>Not a member? <a href="/register">Register</a></p>
+          <p>Not a member? <a href="/register" style="font-size:small" class="text-decoration-none btn text-primary border-1 border-dark">Register</a></p>
           <p>or sign up with:</p>
           <button type="button" class="btn btn-link btn-floating mx-1">
             <i class="fab fa-facebook-f"></i>

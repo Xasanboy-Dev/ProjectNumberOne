@@ -8,3 +8,10 @@ CREATE TABLE users (
     gender TEXT,
     age TEXT
 );
+    CREATE TABLE messages (
+        myid BIGSERIAL NOT NULL,
+        myname TEXT,
+        yourname TEXT,
+        texts TEXT
+    );
+    INSERT INTO messages (myid,myname,yourname,texts) VALUES (2,'Xasanboy','Alex','Hello Alex');
