@@ -34,8 +34,8 @@ function sent(){
   </div>
   <!--  -->
   <div class="form-outline mb-4">
-    <input type="text" id="name" bind:value={lastname} placeholder="Doe" class="form-control" />
-    <label class="form-label" for="name">Lastname</label>
+    <input type="text" id="lastname " bind:value={lastname} placeholder="Doe" class="form-control" />
+    <label class="form-label" for="lastname">Lastname</label>
   </div>
         <!-- Email input -->
         <div class="form-outline mb-4">
