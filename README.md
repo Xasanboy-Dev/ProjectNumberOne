@@ -18,3 +18,6 @@ so reponse status will be 401 message 'Not Found'
 After login iser will be send to the /users
 witj redirect and with his data in database
 and un here he will fill his other data.
+
+### Shopping List 
+Client will select your products and then after 
