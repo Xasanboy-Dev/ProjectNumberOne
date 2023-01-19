@@ -1,0 +1,22 @@
+<script>
+    function load() {
+        const file = document.querySelector(".file")
+        let fileReader = new FileReader()
+        fileReader.onload = () => {
+            let fileUrl = fileReader.result;
+            console.log(fileUrl)
+        }
+    }
+</script>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Title of the document</title>
+</head>
+
+<body>
+    <input type="file" oninput="load()" id="img" name="img" class="file" accept="image/*">
+</body>
+
+</html>

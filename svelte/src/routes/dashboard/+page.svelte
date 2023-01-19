@@ -1,5 +1,10 @@
 <script lang="ts">
   import axios from "axios";
+  let oneUser:any
+  // axios.get("http://localhost:8080/dashboard")
+  // .then(res=>{
+  //   console.log(res)
+  // })
   function click(id:string){
     axios.post(`http://localhost:8080/chatting/${id}`,{body:user[user.length-1]})
     .then(res=>{
@@ -62,6 +67,16 @@ function hello(){
     }
    })
 }
+function balance(id:String){
+ axios.post(`http://localhost:8080/shopping/${id}`)
+ .then(res=>{
+  if(res.status==200){
+    window.location.href = "http://localhost:5173/shopping"
+  }else{
+    alert(res.data.message)
+  }
+ })
+}
 </script>
 <main>
     <div class="d-flex justify-content-center">
@@ -72,9 +87,10 @@ function hello(){
                     <h1 style="font-size: 90px;">{one}</h1>
                 {/if}
               </div>
-          </div>
+            </div>
           <ul class="px-5 pt-2 fs-3" style="cursor: pointer;">
             <li class="d-flex gap-2 pt-3" style="cursor:pointing;"><i class="text-warning bi bi-house"></i>Dashboard</li>
+            <li on:click={()=>{balance(id)}} class="d-flex gap-2 pt-3"><i class="bi bi-cash-coin text-warning"></i>Balance</li>
             <li class="d-flex gap-2 pt-3" on:click={()=>settings(id)}>
             <i class="bi bi-gear text-warning"></i>Settings</li>
             <li class="d-flex gap-2 pt-3"><i class="text-warning bi bi bi-controller"></i>Games</li>

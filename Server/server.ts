@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express"
+import express, { request, Request, Response } from "express"
 import { pool } from "./config/db"
 import cors from "cors"
 const server = express()
@@ -64,8 +64,8 @@ server.get('/', (req: Request, res: Response) => {
 // Post
 server.post("/users", async (req: Request, res: Response) => {
     try {
-        const { name, lastname, email, password } = req.body
-        const user = (await pool.query(`SELECT * FROM users WHERE name = $1  AND lastname = $2 AND email = $3 AND password = $4`, [name, lastname, email, password])).rows
+        const { name, lastname,  email, password } = req.body
+        const user = (await pool.query(`SELECT * FROM users WHERE  email = $1 AND password = $2`, [email, password])).rows
         if (user.length == 0) {
             await pool.query(`INSERT INTO users (name,lastname,email,password) VALUES ($1,$2,$3,$4)`, [name, lastname, email, password])
             res.status(201).json({ message: "Created!" })
@@ -81,8 +81,8 @@ let arr: any
 
 server.post('/login', async (req: Request, res: Response) => {
     try {
-        const { name, lastname, email, password } = req.body
-        const user = (await pool.query(`SELECT * FROM users WHERE name = $1 AND lastname = $2 AND email = $3 AND password = $4`, [name, lastname, email, password])).rows
+        const { email, password } = req.body
+        const user = (await pool.query(`SELECT * FROM users WHERE  email = $1 AND password = $2`, [email, password])).rows
         if (user.length == 1) {
             arr = user
             return res.status(200).json({ message: user })
@@ -152,8 +152,54 @@ server.post("/setting/:id", async (req: Request, res: Response) => {
     try {
         const { id } = req.params
         const { country, age, gender, account } = req.body.body
-         await pool.query(`UPDATE users SET age = $1,country = $2,gender = $3,account = $4 WHERE id = $5`, [age, country, gender, account, id])
+        await pool.query(`UPDATE users SET age = $1,country = $2,gender = $3,account = $4 WHERE id = $5`, [age, country, gender, account, id])
         res.status(200).json({ message: "Saved succesfully!" })
+    } catch (error: any) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
+//Shopping GET Method
+let shoppingUser: any
+server.post("/shopping/:id", async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params
+        shoppingUser = (await pool.query(`SELECT * FROM users WHERE id = $1`, [id])).rows
+        res.status(200).json({ message: "Good!" })
+    } catch (error: any) {
+        res.status(500).json({ message: error.meesgae })
+    }
+})
+
+
+server.get('/shopping', async (req: Request, res: Response) => {
+    try {
+        const allShoppingList = (await pool.query(`SELECT * FROM shopping`)).rows
+        if (shoppingUser !== undefined) {
+            return res.status(200).json({ message: { shoppingUser, allShoppingList } })
+        } else {
+            res.status(400).json({ message: "Please relogin! Your data is not exist in our data." })
+        }
+    } catch (error: any) {
+        res.status(500).json({ message: error.meesgae })
+    }
+})
+
+// For Game
+let Gamer: any
+server.post("/game", async (req: Request, res: Response) => {
+    try {
+        Gamer = req.body.data
+        res.status(200).json({ message: Gamer })
+        Gamer = ""
+    } catch (error: any) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
+server.get("/game", (req: Request, res: Response) => {
+    try {
+        res.status(200).json({ message: Gamer })
     } catch (error: any) {
         res.status(500).json({ message: error.message })
     }

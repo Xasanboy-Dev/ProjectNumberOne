@@ -1,12 +1,10 @@
 <script lang="ts">
  import axios from "axios"
- let name:any;
  let email:any;
  let password:any;
- let lastname:any;
  function click(){
-  if(name!==undefined && email!==undefined && password!==undefined){
- axios.post('http://localhost:8080/login',{name,lastname,email,password})
+  if(email!==undefined && password!==undefined){
+ axios.post('http://localhost:8080/login',{email,password})
  .then(res=>{
  if(res.status==200){
   window.location.href = "http://localhost:5173/user"
@@ -27,17 +25,6 @@ function sent(){
     </div>
 <div class="d-flex justify-content-center">
     <form>
-<!--  -->
-<div class="form-outline mb-4">
-    <input type="text" id="name" bind:value={name} placeholder="John" class="form-control" />
-    <label class="form-label" for="name">Name</label>
-  </div>
-  <!--  -->
-  <div class="form-outline mb-4">
-    <input type="text" id="lastname " bind:value={lastname} placeholder="Doe" class="form-control" />
-    <label class="form-label" for="lastname">Lastname</label>
-  </div>
-        <!-- Email input -->
         <div class="form-outline mb-4">
           <input type="email" id="form2Example1"  bind:value={email} placeholder="JohnDoe@gmail.com" class="form-control" />
           <label class="form-label" for="form2Example1">Email address</label>

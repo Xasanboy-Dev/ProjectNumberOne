@@ -26,13 +26,24 @@
       }).catch(err=>{
         console.log(err.message)
       })
-}function send(id:string){
+}
+  function send(id:string){
    axios.post(`http://localhost:8080/chatting/${id}`,{body:id})
    .then(res=>{
    if(res.status==200){
     window.location.href = "http://localhost:5173/chatting"
-   }
-  })
+   }})
+  }
+  function balance(){
+    const { id } = User[0]
+    axios.post(`http://localhost:8080/shopping/${id}`)
+    .then(res=>{
+     if(res.status==200){
+      window.location.href = "shopping"
+     }else{
+      alert(res.data.message)
+     }
+    })
 }
 </script>
 <main>
@@ -47,6 +58,7 @@
       </div>
       <ul class="px-5 pt-2 fs-3" style="cursor:pointer;">
         <li on:click={()=>{hello(User[0].name,User[0].lastname,User[0].email,User[0].id)}} class="d-flex gap-2 pt-3"><i class="text-warning bi bi-house"></i>Dashboard</li>
+        <li on:click={()=>{balance()}} class="d-flex gap-2 pt-3"><i class="bi bi-cash-coin text-warning"></i>Balance</li>
         <li on:click={()=>{settings(User[0].id)}} class="d-flex gap-2 pt-3"><i class="bi bi-gear text-warning"></i>Settings</li>
         <li class="d-flex gap-2 pt-3"><i class="text-warning bi bi bi-controller"></i>Games</li>
         <li class="d-flex gap-2 pt-3"><i class="text-warning bi bi-bag-dash-fill"></i>Shopping</li>
