@@ -41,9 +41,10 @@
         prices.push(push)
       }
       TotalAmount = 0
+      Selected = 0
       for(let r of prices){
         TotalAmount+=Number(r)
-  Selected++
+       Selected++
       }
     }else{
       console.log("Already exist!")
@@ -78,7 +79,7 @@ function decrement(num:number){
             <div class="card-body">
               <!-- Single item -->
               {#each allShoppingList as list }
-              <div class="row m-2 border border-dark rounded  p-2">
+              <div class="row  mt-3 mx-2 border border-dark rounded  p-2">
                 <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                   <!-- Image -->
                   <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
@@ -90,26 +91,28 @@ function decrement(num:number){
                   </div>
                   <!-- Image -->
                 </div >
-                <div class="d-flex col-lg-5 col-md-6 mb-4 mb-lg-0">
-                  <div>
-                  <h4>Price:{list.price}</h4>
-                  <!-- Data -->
-                  <p><strong></strong></p>
-                  <p>Color: <span style="background-color: {list.color};" class="text-light rounded fs-5">{list.color}</span></p>
-                  <p>Size: {list.size}</p>
-                  <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
-                    title="Move to the wish list" on:click={()=>{haveSeletedProducrs(list)}}>
-                    <i class="fas fa-heart"></i>
-                    Select
-                  </button>
-                  <button type="button" class="btn btn-primary btn-sm mb-2" data-mdb-toggle="tooltip"
-                    title="Move to the wish list">
-                    <i class="bi bi-star-fill"></i>
-                    Favorites
-                  </button>
+                <div class="d-flex col-lg-5 col-md-6 mb-4  mb-lg-0">
+                  <div  class="px-5" style="width:500px">
+                    <ul>
+                      <li class="">Name: {list.name}</li>
+                      <li style="width: 150px;">Color: <span class="rounded text-light" style="background-color:{list.color}">{list.color}</span></li>
+                      <li>Size: {list.size}</li>
+                      <li>Price: {list.price}</li>
+                      <li>Phone: {list.phone}</li>
+                    </ul>
+                         <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
+                           title="Move to the wish list" on:click={()=>{haveSeletedProducrs(list)}}>
+                           <i class="fas fa-heart"></i>
+                           Select
+                         </button>
+                         <button type="button" class="btn btn-primary btn-sm mb-2" data-mdb-toggle="tooltip"
+                           title="Move to the wish list">
+                           <i class="bi bi-star-fill"></i>
+                           Favorites
+                         </button>
                   </div>
                   <!-- Data -->
-                  <div class="p-5 d-flex gap-5 align-items-center">
+                  <div class="mx-5 p-5 d-flex gap-5 align-items-center">
                     <button class="p-2 rounded bg-primary text-light fs-4" on:click={()=>(increment(limited))}>+</button>
                     <input class="" bind:value={limited} style="height:55px;width:50px;">
                     <button class="p-2 rounded bg-danger text-light fs-4" on:click={()=>decrement(limited)}>-</button>
@@ -126,16 +129,16 @@ function decrement(num:number){
               <ul class="list-group list-group-flush">
                 <li
                 class="list-group-item fs-4 d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                <span class="text-warning">My cash</span>
+                <span class="text-warning d-flex align-items-center gap-2"><i class="bi bi-cash-coin"></i> My cash</span>
                 <span>{ShoppingUser.coin!==null?ShoppingUser.coin:0}$</span>
               </li>
                 <li
                   class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                  <span class="text-warning fs-4">Products</span>
+                  <span class="text-warning fs-4"><i class="bi bi-cart"></i> Products</span>
                   <span class="">{Selected}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                    <span class="text-warning fs-4">Shiping</span>
+                    <span class="text-warning fs-4"><i class="bi bi-truck"></i> Shiping</span>
                   <span>Free</span>
                 </li>
                 <li
@@ -166,3 +169,8 @@ function decrement(num:number){
     </div>
   </section>
   {/if}
+  <style>
+    li::marker{
+      color:white
+    }
+  </style>
