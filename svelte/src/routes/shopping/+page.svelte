@@ -1,5 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
+	import ForEach from "../forEach.svelte";
   let ShoppingUser:any
   let allShoppingList:any
   let length:Number
@@ -28,42 +29,38 @@
         console.log(err.message)
       })
     }
+
     let TotalAmount:any = 0
     let Selected:any = 0 
     let arr:any = []
-    function haveSeletedProducrs(coin:string){
-    if(!arr.includes(coin)){
-      arr.push(coin)
-      let count =""
-      let prices:any = []
-      for(let r of arr){
-        let push = r.price.split("$").join("")
-        prices.push(push)
-      }
-      TotalAmount = 0
-      Selected = 0
-      for(let r of prices){
-        TotalAmount+=Number(r)
-       Selected++
-      }
-    }else{
-      console.log("Already exist!")
-    }
-}
-let limited:number = 0
-function increment(num:number){
-   limited++
-}
-function decrement(num:number){
-  if(limited==0){
-    limited = 0
-  }else{
-    limited--
+    
+    function haveSeletedProducrs(coin:any,count:number){
+   let price = coin.price
+   price = price.split("$").join("")
+   let total = price*count
+    Selected+=count
+    TotalAmount+=total
   }
+export function favorites(list:any){
+   axios.post("http://localhost:8080/favorites",{list})
+   .then(res=>{
+     if(res.status==200){
+      window.location.href = "/favorites"
+     }
+  })
+   .catch(err=>{
+    console.log(err.message)
+   })
 }
+
 </script>
 {#if length!==undefined}
 <section class="h-100 gradient-custom">
+  <div class="d-flex text-danger fs-1 border">
+    <a href="/user">
+    <i class="bi bi-arrow-left border"></i>
+    </a>
+  </div>
   <div class="container py-5">
     <div class="row d-flex justify-content-center my-4">
       <div class="d-flex justify-content-end"> 
@@ -78,47 +75,12 @@ function decrement(num:number){
             </div>
             <div class="card-body">
               <!-- Single item -->
-              {#each allShoppingList as list }
-              <div class="row  mt-3 mx-2 border border-dark rounded  p-2">
-                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                  <!-- Image -->
-                  <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-                    <img src="{list.foto}"
-                    class="w-100" alt={list.name + " " + list.color} />
-                    <a href="#!">
-                      <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-                    </a>
-                  </div>
-                  <!-- Image -->
-                </div >
-                <div class="d-flex col-lg-5 col-md-6 mb-4  mb-lg-0">
-                  <div  class="px-5" style="width:500px">
-                    <ul>
-                      <li class="">Name: {list.name}</li>
-                      <li style="width: 150px;">Color: <span class="rounded text-light" style="background-color:{list.color}">{list.color}</span></li>
-                      <li>Size: {list.size}</li>
-                      <li>Price: {list.price}</li>
-                      <li>Phone: {list.phone}</li>
-                    </ul>
-                         <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
-                           title="Move to the wish list" on:click={()=>{haveSeletedProducrs(list)}}>
-                           <i class="fas fa-heart"></i>
-                           Select
-                         </button>
-                         <button type="button" class="btn btn-primary btn-sm mb-2" data-mdb-toggle="tooltip"
-                           title="Move to the wish list">
-                           <i class="bi bi-star-fill"></i>
-                           Favorites
-                         </button>
-                  </div>
-                  <!-- Data -->
-                  <div class="mx-5 p-5 d-flex gap-5 align-items-center">
-                    <button class="p-2 rounded bg-primary text-light fs-4" on:click={()=>(increment(limited))}>+</button>
-                    <input class="" bind:value={limited} style="height:55px;width:50px;">
-                    <button class="p-2 rounded bg-danger text-light fs-4" on:click={()=>decrement(limited)}>-</button>
-                  </div>
-                </div>
-              </div>
+              {#each allShoppingList as  list }
+                <ForEach
+                  list={list}
+                  haveSeletedProducrs={haveSeletedProducrs}
+                  favorites={favorites}
+              />
               {/each}
             </div>
           </div>

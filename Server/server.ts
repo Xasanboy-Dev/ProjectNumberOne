@@ -64,7 +64,7 @@ server.get('/', (req: Request, res: Response) => {
 // Post
 server.post("/users", async (req: Request, res: Response) => {
     try {
-        const { name, lastname,  email, password } = req.body
+        const { name, lastname, email, password } = req.body
         const user = (await pool.query(`SELECT * FROM users WHERE  email = $1 AND password = $2`, [email, password])).rows
         if (user.length == 0) {
             await pool.query(`INSERT INTO users (name,lastname,email,password) VALUES ($1,$2,$3,$4)`, [name, lastname, email, password])
@@ -202,6 +202,25 @@ server.get("/game", (req: Request, res: Response) => {
         res.status(200).json({ message: Gamer })
     } catch (error: any) {
         res.status(500).json({ message: error.message })
+    }
+})
+
+// Favorites POST Method
+let allFavorites: any = []
+
+server.post('/favorites', (req: Request, res: Response) => {
+    try {
+        allFavorites.push(req.body.list)
+    } catch (error: any) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
+server.get("/favorites", (req: Request, res: Response) => {
+    try {
+        res.status(200).json({ message: "Hello Bro" })
+    } catch (error: any) {
+        res.status(500).json({ message: error.meesgae })
     }
 })
 server.listen(PORT, () => {

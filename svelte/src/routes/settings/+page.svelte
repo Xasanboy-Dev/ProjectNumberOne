@@ -49,7 +49,7 @@
               <div class="col p-2"><b>When you was born?:</b> <select class="rounded" bind:value={age}><Age/></select></div>
               <div class="w-100 p-2"></div>
               <div class="col"><b>What is your gender?: </b><select class="rounded" bind:value={gender}><option>Male</option><option>Female</option></select></div>
-              <div class="col"><b>How should your account be?:</b><select class="rounded" bind:value={account}><option>Private</option><option>Public</option></select></div>
+              <div class="col"><b>How should your account be?:</b><select class="rounded" bind:value={account}><option>Public</option><option>Private</option></select></div>
             <button class="m-5 p-2 rounded fs-3" on:click={()=>save(user.id)} >Save my data</button>
             </div>
           </div>
