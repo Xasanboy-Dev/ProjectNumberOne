@@ -19,5 +19,13 @@ After login iser will be send to the /users
 witj redirect and with his data in database
 and un here he will fill his other data.
 
-### Shopping List 
+### Shopping List 🛒
 Client will select your products and then after 
+
+### Games 🎲
+You can earn your first money on my Server
+And then you can 💲buy💲  your favourite things
+Then it delivered to your address.
+
+Is it good?
+# Yes # No 
