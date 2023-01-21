@@ -8,7 +8,8 @@ CREATE TABLE users (
     gender TEXT,
     age TEXT,
     account TEXT,
-    coin TEXT
+    coin TEXT,
+    products TEXT
 );
 
 CREATE TABLE messages (
@@ -40,7 +41,8 @@ CREATE TABLE shopping (
     foto TEXT NOT NULL,
     price TEXT NOT NULL,
     userId TEXT NOT NULL,
-    phone TEXT NOT NULL
+    phone TEXT NOT NULL,
+    text TEXT
 );
 
 INSERT INTO

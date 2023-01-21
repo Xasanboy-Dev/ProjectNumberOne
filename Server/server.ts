@@ -223,6 +223,37 @@ server.get("/favorites", (req: Request, res: Response) => {
         res.status(500).json({ message: error.meesgae })
     }
 })
+// For me to Author
+let author:any
+server.post("/product",(req:Request,res:Response)=>{
+    try {
+     author = req.body.author
+        res.status(200).json({message:"Good!"})
+    } catch (error:any) {
+        res.status(500).json({message:error.message})
+    }
+})
+
+server.get("/product",(req:Request,res:Response)=>{
+    try {
+        res.status(200).json({message:author})
+    } catch (error:any) {
+        res.status(500).json({message:error.message})
+    }
+})
+
+// Create product 
+server.post('/createProduct' ,async (req:Request,res:Response)=>{
+    try {
+   const { name,author,model,color,size,text,image,price,number } = req.body.message
+   const allProducts = (await pool.query(`SELECT * FROM shopping`)).rows
+  let {id} = author
+    let created = (await pool.query(`INSERT INTO shopping (name,size,color,foto,price,userId,phone,text) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,[name,size,color,image,price,id,number,text])).rows
+  return  res.status(200).json({message:"Created!"})
+} catch (error:any) {
+        res.status(500).json({message:error.message})
+    }
+})
 server.listen(PORT, () => {
     console.log(`Server: http://localhost:${PORT}`)
 })
