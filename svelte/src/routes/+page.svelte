@@ -9,7 +9,7 @@
         </li>
         </a>
         <li class="d-flex mb-3 gap-3 btn border-2 border-dark bg-danger rounded justify-content-center align-items-center">
-            <a href="/dashboard/forclient" class="btn bg-danger fs-4"><i class="bi bi-people-fill px-2 text-light"></i>See all users</a>
+            <a href="/seeAllUsers" class="btn bg-danger fs-4"><i class="bi bi-people-fill px-2 text-light"></i>See all users</a>
         </li>
         <li class="d-flex gap-3 mb-3 btn border-2 border-dark bg-danger rounded p-3 justify-content-center align-items-center">
             <a href="/writting" class="btn bg-danger fs-4"><i class="bi bi-airplane-engines px-2 text-light"></i>Write to the admin</a>
