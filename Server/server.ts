@@ -254,6 +254,31 @@ server.post('/createProduct' ,async (req:Request,res:Response)=>{
         res.status(500).json({message:error.message})
     }
 })
+// Basket Post Method
+let ProductsInBasket:any
+let coins:any
+server.post('/basket',(req:Request,res:Response)=>{
+    try {
+         const {Products,coin} = req.body
+         ProductsInBasket = Products
+          coins = coin
+          res.status(200).json({message:"Good!"})
+        } catch (error:any) {
+        res.status(500).json({message:error.message})
+}
+})
+
+server.get("/basket",(req:Request,res:Response)=>{
+    try {
+        if(ProductsInBasket!==undefined && coins!==undefined){ 
+        return res.status(200).json({message:{ProductsInBasket,coins}})
+        }
+        res.status(200).json({message:"You have some problems in Basket Products or in coin!"})
+
+    } catch (error:any) {
+        res.status(500).json({message:error.message})
+    }
+})
 server.listen(PORT, () => {
     console.log(`Server: http://localhost:${PORT}`)
 })
