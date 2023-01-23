@@ -35,3 +35,4 @@ Is it good?
 # Yes # No 
 
 if yes write to about a new post and get methods for adding to my Server
+Else I will not glad at you!
