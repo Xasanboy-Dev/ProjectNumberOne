@@ -5,18 +5,43 @@
  let category:string
  let size:string
  let description:string
- let url_image:string
+ let url_image:any
 let model:string
 let price:string
 let number:string
 
+let input:HTMLInputElement
+
+function download(input:HTMLInputElement){
+ let file:any=input.files
+ const name = file[0]
+ let reader =  new FileReader()
+ if(name.size/1024>=30){
+  alert("Your image size is a very large!. Please check your size of image!") 
+  return 
+}else{ 
+ reader.readAsDataURL(name)
+ reader.onload = ()=>{
+  url_image =  reader.result
+ }
+}
+}
  let author:any
  axios.get("http://localhost:8080/product")
  .then(res=>{
    author = res.data.message
  })
  function create(author:string){
-let createdProduct = {number:number,price:price,author:author,name:name_of_product,model,color:select,category,size,text:description,image:url_image}
+let createdProduct = {
+  number:number,
+  price:price,
+  author:author,
+  name:name_of_product,
+  model,color:select,
+  category,
+  size,
+  text:description,
+  image:url_image}
     if( 
 model!==undefined &&
 name_of_product!==undefined&&
@@ -125,7 +150,7 @@ number!==undefined
         <div class="form-group  align-items-center d-flex justify-content-center m-2">
             <label class="col-md-4 control-label"  for="product_name">PRODUCT IMAGE URL</label>  
             <div class="col-md-4">
-            <input bind:value={url_image} placeholder="PRODUCT IMAGE URL" class="form-control input-md" type="url">
+            <input  bind:this={input} on:change={()=>download(input)} placeholder="PRODUCT IMAGE URL" class="form-control input-md" type="file">
             </div>
           </div>
           <div class="form-group  align-items-center d-flex justify-content-center m-2">

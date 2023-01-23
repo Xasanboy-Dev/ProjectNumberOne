@@ -1,0 +1,8 @@
+
+POST http://localhost:8080/basket
+Content-Type: application/json
+
+{
+  "peson":1,
+  "products":[1,2,3]
+}

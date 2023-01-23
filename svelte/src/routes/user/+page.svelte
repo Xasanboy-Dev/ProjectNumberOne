@@ -58,10 +58,10 @@
       </div>
       <ul class="px-5 pt-2 fs-3" style="cursor:pointer;">
         <li on:click={()=>{hello(User[0].name,User[0].lastname,User[0].email,User[0].id)}} class="d-flex gap-2 pt-3"><i class="text-warning bi bi-house"></i>Dashboard</li>
-        <li on:click={()=>{balance()}} class="d-flex gap-2 pt-3"><i class="bi bi-cash-coin text-warning"></i>Balance</li>
+        <li  class="d-flex gap-2 pt-3"><i class="bi bi-cash-coin text-warning"></i>Balance</li>
         <li on:click={()=>{settings(User[0].id)}} class="d-flex gap-2 pt-3"><i class="bi bi-gear text-warning"></i>Settings</li>
-        <li class="d-flex gap-2 pt-3"><i class="text-warning bi bi bi-controller"></i>Games</li>
-        <li class="d-flex gap-2 pt-3"><i class="text-warning bi bi-bag-dash-fill"></i>Shopping</li>
+        <li  class="d-flex gap-2 pt-3"><i class="text-warning bi bi bi-controller"></i>Games</li>
+        <li on:click={()=>{balance()}} class="d-flex gap-2 pt-3"><i class="text-warning bi bi-bag-dash-fill"></i>Shopping</li>
         <li class="d-flex gap-2 pt-3"><i class="bi bi-chat-dots-fill text-warning"></i>Chatting</li>
         <a href="/logout" class="text-decoration-none text-dark"><li class="d-flex gap-2 pt-3"><i class="text-warning bi bi bi-box-arrow-left"></i>Log out</li></a>
       </ul>
