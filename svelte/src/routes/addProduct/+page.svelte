@@ -148,9 +148,9 @@ number!==undefined
           </div>
         </div>
         <div class="form-group  align-items-center d-flex justify-content-center m-2">
-            <label class="col-md-4 control-label"  for="product_name">PRODUCT IMAGE URL</label>  
+            <label class="col-md-4 control-label"  for="product_name">PRODUCT IMAGE</label>  
             <div class="col-md-4">
-            <input  bind:this={input} on:change={()=>download(input)} placeholder="PRODUCT IMAGE URL" class="form-control input-md" type="file">
+            <input  bind:this={input} on:change={()=>download(input)} name="img" accept='image/*' placeholder="PRODUCT IMAGE URL" class="form-control input-md" type="file">
             </div>
           </div>
           <div class="form-group  align-items-center d-flex justify-content-center m-2">

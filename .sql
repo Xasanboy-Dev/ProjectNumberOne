@@ -9,7 +9,8 @@ CREATE TABLE users (
     age TEXT,
     account TEXT,
     coin TEXT,
-    products TEXT
+    products TEXT,
+    image TEXT
 );
 
 CREATE TABLE messages (
@@ -46,7 +47,7 @@ CREATE TABLE shopping (
 );
 
 INSERT INTO
-    shopping (name, size, color, foto, price,phone, userId)
+    shopping (name, size, color, foto, price, phone, userId)
 VALUES
     (
         'T-shirt',

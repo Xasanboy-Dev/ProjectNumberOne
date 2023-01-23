@@ -1,9 +1,11 @@
 <script lang="ts">
   import axios from "axios";
    let User:any
+   let foto:any
     axios.get('http://localhost:8080/user')
          .then(res=>{
     User =  res.data.message
+    foto = User[0].image
   }).catch(err=>{
     alert(err.message)
          })
@@ -50,11 +52,15 @@
   <div class="d-flex justify-content-center">
     <div class="bg-primary m-2 rounded" style=" width:22%;height:650px;border:2px solid black;">
       <div class="d-flex justify-content-center">
-          <div style="background-color:red;width:150px;margin-top:10px;height:150px;border-radius:75px;font-size:100px" class="hello d-flex justify-content-center align-items-center">
+        {#if foto==undefined || foto==null}
+        <div style="background-color:red;width:150px;margin-top:10px;height:150px;border-radius:75px;font-size:100px" class="hello d-flex justify-content-center align-items-center">
            {#if User!==undefined}
             {User[0].name[0]}
            {/if}
           </div>
+          {:else}
+          <img  src="{foto}" style="height:auto;width:96px;margin-top:10px;height:96px;border-radius:75px;font-size:150px" class=" d-flex justify-content-center align-items-center "/>
+          {/if}  
       </div>
       <ul class="px-5 pt-2 fs-3" style="cursor:pointer;">
         <li on:click={()=>{hello(User[0].name,User[0].lastname,User[0].email,User[0].id)}} class="d-flex gap-2 pt-3"><i class="text-warning bi bi-house"></i>Dashboard</li>

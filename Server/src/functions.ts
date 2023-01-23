@@ -13,11 +13,13 @@ const user: string[] = []
 
 export async function PostDashboard(req: Request, res: Response) {
     try {
-        const { name, lastname, email, id } = req.body;
+        const { name, lastname, email, image, id } = req.body;
         user[0] = name;
         user[1] = lastname;
         user[2] = email;
-        user[3] = id;
+        let User: any = (await pool.query(`SELECT * FROM users WHERE id = $1`, [id])).rows
+        user[3] = User;
+        user[4] = id
         res.status(200).json({ message: "Ok" });
     } catch (error: any) {
         res.status(500).json({ message: error.message })
@@ -183,10 +185,13 @@ export async function GetSettings(req: Request, res: Response) {
 export async function PostSettingId(req: Request, res: Response) {
     try {
         const { id } = req.params;
-        const { country, age, gender, account } = req.body.body;
+        let { country, age, gender, account, foto } = req.body.body;
+        if (!foto) {
+            foto = "Hello World"
+        }
         await pool.query(
-            `UPDATE users SET age = $1,country = $2,gender = $3,account = $4 WHERE id = $5`,
-            [age, country, gender, account, id]
+            `UPDATE users SET age = $1,country = $2,gender = $3,account = $4,image = $5 WHERE id = $6`,
+            [age, country, gender, account, foto, id]
         );
         res.status(200).json({ message: "Saved succesfully!" });
     } catch (error: any) {

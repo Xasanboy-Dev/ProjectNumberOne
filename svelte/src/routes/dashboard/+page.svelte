@@ -1,10 +1,5 @@
 <script lang="ts">
   import axios from "axios";
-  let oneUser:any
-  // axios.get("http://localhost:8080/dashboard")
-  // .then(res=>{
-  //   console.log(res)
-  // })
   function click(id:string){
     axios.post(`http://localhost:8080/chatting/${id}`,{body:user[user.length-1]})
     .then(res=>{
@@ -21,11 +16,13 @@
   let Users:any = []
   let one:any
   let text:any
+  let foto:any
   let id:any
   function input(){
     if(text==undefined || text==""){ 
   axios.get(`http://localhost:8080/dashboard/all`)
  .then(res=>{
+ foto = (res.data.message.user[3][0].image)
   user = res.data.message.user
    Users = res.data.message.users 
     one = user[0][0]
@@ -82,11 +79,17 @@ function balance(id:String){
     <div class="d-flex justify-content-center">
         <div class="bg-primary m-2 rounded" style=" width:22%;height:650px;border:2px solid black;">
           <div class="d-flex justify-content-center">
-             <div style="background-color:red;width:150px;margin-top:10px;height:150px;border-radius:75px;font-size:150px" class=" d-flex justify-content-center align-items-center ">
+            {#if foto==undefined}
+             <div  style="background-color:red;width:150px;margin-top:10px;height:150px;border-radius:75px;font-size:150px" class=" d-flex justify-content-center align-items-center ">
                 {#if one!==undefined}
                     <h1 style="font-size: 90px;">{one}</h1>
                 {/if}
               </div>
+              {:else}
+              <div  style="background-image: url({foto});height:auto;width:96px;margin-top:10px;height:96px;border-radius:75px;background-size:100%;position:relative;
+              overflow:hidden" class=" d-flex justify-content-center align-items-center "></div>
+              {/if}
+              
             </div>
           <ul class="px-5 pt-2 fs-3" style="cursor: pointer;">
             <li class="d-flex gap-2 pt-3" style="cursor:pointing;"><i class="text-warning bi bi-house"></i>Dashboard</li>
@@ -111,6 +114,7 @@ function balance(id:String){
             <table class="table table-dark pt-5 px-5 mt-5">
                 <thead>
                   <tr>
+                    <th scope="col">Profile</th>
                     <th scope="col">Name</th>
                     <th scope="col">Lastname</th>
                     <th scope="col">Email</th>
@@ -123,6 +127,9 @@ function balance(id:String){
                 <tbody>
                   {#each Users as hello}
                   <tr>
+                    <th>
+                    <img src="{hello.image}" style="border:3px solid aqua;background-size:100%;width:50px;margin-top:10px;height:50px;border-radius:75px;font-size:150px">
+                    </th>
                     <th scope="row">{hello.name}</th>
                     <th scope="row">{hello.lastname}</th>
                     <th scope="row">{hello.email}</th>

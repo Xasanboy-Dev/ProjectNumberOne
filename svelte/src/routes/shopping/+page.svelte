@@ -97,7 +97,7 @@ axios.post("http://localhost:8080/basket",Product)
                     </div>
                     <ul style="width:450px;">
                         <li><b>Name:{list.name}</b></li>
-                        <li><b>Price:{list.price}</b></li>
+                        <li><b>Price:{list.price}$</b></li>
                         <li><b>Phone:+{list.phone}</b></li>
                         <li><b>Size:{list.size}</b></li>
                     </ul>
