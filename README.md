@@ -27,5 +27,12 @@ You can earn your first money on my Server
 And then you can 💲buy💲  your favourite things
 Then it delivered to your address.
 
+### Balance for Users
+You can see your balance in your account and you can see
+About How to increase own balance
+
 Is it good?
 # Yes # No 
+
+if yes write to about a new post and get methods for adding to my Server
+Else I will not glad at you!
