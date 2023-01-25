@@ -1,177 +1,301 @@
 <script lang="ts">
-	let on: boolean = true;
-	import axios from 'axios';
-	let name: string;
-	let valueOftheCalculator: string = 'ON';
-	let id: number = 0;
-	let maxNum: number;
-	let PlayerName: string;
-	let upInput: any = '';
-	let downInput: any = '';
+	import axios from "axios";
+    let correctAnwers:number = 0
+  let maxNum:Number = 0
+  let PlayerName:string
 	axios.get('http://localhost:8080/game').then((res) => {
 		maxNum = +res.data.message[0].max;
 		PlayerName = res.data.message[0].name;
-	});
-	function click() {
-		if (on == true) {
-			upInput = '';
-			downInput = '';
-			valueOftheCalculator = 'OFF';
-			return (on = false);
-		}
-		valueOftheCalculator = 'ON';
-		on = true;
-	}
-	function allClear() {
-		upInput = '';
-		downInput = '';
-	}
-	function clear() {
-		let text = '';
-		// for (let r = 0; i <= upInput.length - 2; i++) {
-
-		// }
-	}
-	function plus() {
-		let Num = Number(upInput);
-		let Nuumber2 = +downInput.split(' ')[0];
-		downInput = Num + Nuumber2;
-		downInput += ' +';
-		upInput = '';
-	}
-	function minus() {
-		let Num = Number(upInput);
-		let Nuumber2 = +downInput.split(' ')[0];
-		downInput = Nuumber2 - Num;
-		downInput += ' -';
-		upInput = '';
-	}
+    });
+    let first:number = 0
+    let second:number = 0
+    let third:number = 0
+    let fourth:number = 0
+    let one:number = 0
+    let two:number = 0
+    let toDo:string[] = ['+','-','*']
+    function between(min:number, max:number) {  
+        return Math.floor(Math.random() * (max - min) + min)
+    }
+    let amal:string = toDo[between(0,3)]
+    first = between(1,1000)
+    second = between(1,1000)
+   function creating(){ 
+    if(amal=="+"){
+        one = between(second,second+first)
+        two = between(second,second+first)
+         third = between(second,second+first)
+        fourth= first+second
+     }else if(amal=="-"){
+         third = first - second
+        one = third>0?between(second - first,second):-1*between(first,second)
+        two = third>0?between(second-first,second):-1*between(first,second)
+        fourth= third>0?between(second-first,second):-1*between(first,second)
+     }else {
+        one = first * second
+        two = between(first,second*first)
+        third = between(first,second*first)
+        fourth = between(first,second*first)
+     }
+    }
+    creating()
+    function fisrt(){
+        if(amal=="+"){ 
+  if(one==first+second){
+    alert("Togri")
+    correctAnwers+=1
+    first = between(1,1000)
+    second = between(1,1000)
+    one = between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+}else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()
+  }
+}else if(amal=="-"){
+    if(one==first-second){
+    alert("Togri")
+    first = between(1,1000)
+    second = between(1,1000)
+    correctAnwers+=1
+    one = between(first,second)
+  }else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()
+  } 
+}else{
+    if(one==first*second){
+    alert("Togri")
+    correctAnwers+=1
+    first = between(1,1000)
+    second = between(1,1000)
+    one = between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()
+  }
+}
+}
+function another(){
+    if(amal=="+"){ 
+  if(two==first+second){
+    alert("Togri")
+    first = between(1,1000)
+    second = between(1,1000)
+    correctAnwers+=1
+    two = between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()
+  }
+}else if(amal=="-"){
+    if(two==first-second){
+    alert("Togri")
+    first = between(1,1000)
+    second = between(1,1000)
+    correctAnwers+=1
+    two = between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+}else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()
+  } 
+}else{
+    if(two==first*second){
+    alert("Togri")
+    first = between(1,1000)
+    second = between(1,1000)
+    correctAnwers+=1
+    two = between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    amal = toDo[between(0,3)]
+    creating()
+  }
+}
+}
+function three(){
+    if(amal=="+"){ 
+  if(third==first+second){
+    alert("Togri")
+    first = between(1,1000)
+    second = between(1,1000)
+    correctAnwers+=1
+    third= between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()
+  }
+}else if(amal=="-"){
+    if(third==first-second){
+    alert("Togri")
+    first = between(1,1000)
+    second = between(1,1000)
+    correctAnwers+=1
+    third= between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()
+  } 
+}else{
+    if(third==first*second){
+    alert("Togri")
+    correctAnwers+=1
+    first = between(1,1000)
+    second = between(1,1000)
+    third = between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    amal = toDo[between(0,3)]
+    creating()  
+}
+}
+}
+function four(){
+    if(amal=="+"){ 
+  if(fourth==first+second){
+    alert("Togri")
+    first = between(1,1000)
+    second = between(1,1000)
+    correctAnwers+=1
+    fourth = between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()  
+}
+}else if(amal=="-"){
+    if(fourth==first-second){
+    alert("Togri")
+    correctAnwers+=1
+    first = between(1,1000)
+    second = between(1,1000)
+    fourth= between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()
+} 
+}else{
+    if(fourth==first*second){
+    alert("Togri")
+    first = between(1,1000)
+    second = between(1,1000)
+    correctAnwers+=1
+    fourth = between(first,second)
+    amal = toDo[between(0,3)]
+    creating()
+  }else{
+    alert("Notogri!")
+    first = between(1,1000)
+    second = between(1,1000)
+    amal = toDo[between(0,3)]
+    creating()  
+}
+}
+}
 </script>
-
-<div>
-	{#if PlayerName !== undefined}
-		<div class="card d-flex m-5 p-2 justify-content-center">
-			<h4>Hello {PlayerName}. Your record is {maxNum} correct asnwers in a one game!</h4>
-		</div>
-		<div class="card d-flex  justify-content-center">
-			<div class="numbers d-flex justify-content-center">
-				<div class="up m-2 d-flex justify-content-center div">
-					<input type="text" bind:value={upInput} class="input form-control" disabled />
-				</div>
-			</div>
-			<div class="d-flex m-2 justify-content-center">
-				<div class="down d-flex justify-content-center div">
-					<input type="text" class="form-control input" bind:value={downInput} disabled />
-				</div>
-			</div>
-			<div class="numbers d-flex justify-content-center">
-				<div class="container">
-					<div class="row d-flex gap-2">
-						<button
-							on:click={() => click()}
-							class="col-sm border bg-{on == true ? 'success' : 'danger'} text-light"
-							>{valueOftheCalculator}</button
-						>
-						<button class="col-sm border bg-danger text-light" on:click={() => allClear()}
-							>AC</button
-						>
-						<button class="col-sm border bg-danger text-light" on:click={() => clear()}
-							><i class="bi bi-backspace" /></button
-						>
-					</div>
-					<div class="row d-flex mt-3 gap-2">
-						<button class="col-sm border bg-success text-light" on:click={() => plus()}>+</button>
-						<button class="col-sm border bg-success text-light" on:click={() => minus()}>-</button>
-						<button class="col-sm border bg-success text-light">*</button>
-					</div>
-					<div class="row  mt-3 d-flex gap-2">
-						<button class="col-sm border bg-success text-light">:</button>
-						<button class="col-sm border bg-success text-light">√x</button>
-						<button class="col-sm border bg-success text-light">x**2</button>
-					</div>
-					<div class="row  mt-3 d-flex gap-2">
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '1') : alert('Turn on the calculator!'))}
-							>1</button
-						>
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '2') : alert('Turn on the calculator!'))}
-							>2</button
-						>
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '3') : alert('Turn on the calculator!'))}
-							>3</button
-						>
-					</div>
-					<div class="row  mt-3 d-flex gap-2">
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '4') : alert('Turn on the calculator!'))}
-							>4</button
-						>
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '5') : alert('Turn on the calculator!'))}
-							>5</button
-						>
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '6') : alert('Turn on the calculator!'))}
-							>6</button
-						>
-					</div>
-					<div class="row d-flex mt-3 gap-2">
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '7') : alert('Turn on the calculator!'))}
-							>7</button
-						>
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '8') : alert('Turn on the calculator!'))}
-							>8</button
-						>
-						<button
-							class="col-sm  border bg-success text-light"
-							on:click={() => (on == true ? (upInput += '9') : alert('Turn on the calculator!'))}
-							>9</button
-						>
-					</div>
-					<div class="row d-flex mt-3 gap-2">
-						<button class="col-sm  border bg-primary text-light">=</button>
-						<button
-							class="col-sm  border bg-primary text-light"
-							on:click={() => (on == true ? (upInput += '0') : alert('Turn on the calculator!'))}
-							>0</button
-						>
-					</div>
-					<div class="mt-3" />
-				</div>
-			</div>
-		</div>
-	{/if}
-</div>
-
+<main>
+    {#if PlayerName!==undefined}
+    <div class='card'>
+<h4>Hello {PlayerName}</h4>
+<h4>Your Record is:{maxNum}</h4>
+<h4>Correct answers:{correctAnwers}</h4>
+    </div>
+    <div class="m-5">
+            <div class="row   gap-5">
+              <div class="col-sm bg-danger text-light d-flex div justify-content-center border">
+                {first}
+              </div>
+              <div class="col-sm d-flex div justify-content-center text-light bg-success border">
+                {amal}
+              </div>
+              <div class="col-sm d-flex div bg-danger text-light justify-content-center border">
+                {second}
+              </div>
+            </div>
+    </div>
+        <div class="container">
+            <div>
+                <i class="bi bi-envelope"></i>
+            </div>
+            <div class="row m-5 p-5 ">
+              <div on:click={()=>fisrt()} class="col-sm  mx-5 border ans  d-flex bg-danger text-light   alijn-items-center justify-content-center">
+                {one}
+              </div>
+              <div  on:click={()=>another()} class="col-sm  border mx-5 ans d-flex bg-danger text-light   justify-content-center">
+{two}
+              </div>
+            </div>
+            <div class="row m-5 p-5">
+                <div  on:click={()=>three()} class="col-sm border mx-5 ans d-flex bg-danger text-light   justify-content-center">
+{third}
+                </div>
+                <div on:click={()=>four()} class="col-sm border mx-5 ans d-flex  bg-danger text-light justify-content-center">
+{fourth}
+                </div>
+              </div>
+              <div class="gap-5 justify-content-center m-2 d-flex">
+                <button class="btn text-light bg-danger">Refresh</button>
+                <a href="/calculator">
+                <button class="btn text-light bg-danger">Calculator</button>
+                </a>
+            </div>
+          </div>
+    {/if}
+</main>
 <style>
-	.container {
-		width: 750px;
-	}
-	.col-sm {
-		cursor: pointer;
-	}
-	button {
-		font-size: 25px;
-	}
-	.div {
-		display: flex;
-		justify-content: center;
-		width: 750px;
-	}
-	.input {
-		text-align: center;
-		font-size: 25px;
-	}
+    .div{
+        width: 950px;
+        font-size: 50px;
+    }
+    .ans{
+        height:50px;
+        border:6px solid black;
+        display: flex;
+        font-size: 25px;
+    }
 </style>

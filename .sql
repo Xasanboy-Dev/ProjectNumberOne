@@ -70,4 +70,4 @@ CREATE TABLE Games (
 INSERT INTO
     Games (Gamename, max, myid,name)
 VALUES
-    ('Snake Henzie', 10, 1, 'Xasanboy');
+    ('Math', 10, 1, 'Xasanboy');

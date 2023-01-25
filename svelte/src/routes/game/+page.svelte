@@ -11,7 +11,6 @@
 		}
 	});
 	function click(name: string, id: number) {
-		alert(id);
 		axios.post('http://localhost:8080/game', { name, id }).then((res) => {
 			if (res.status == 200) {
 				window.location.href = '/Math';
