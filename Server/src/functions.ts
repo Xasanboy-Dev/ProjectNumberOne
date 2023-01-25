@@ -227,24 +227,6 @@ export async function GetShopping(req: Request, res: Response) {
     }
 }
 
-let Gamer: any;
-export async function PostGame(req: Request, res: Response) {
-    try {
-        Gamer = req.body.data;
-        res.status(200).json({ message: Gamer });
-        Gamer = "";
-    } catch (error: any) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
-export async function GetGame(req: Request, res: Response) {
-    try {
-        res.status(200).json({ message: Gamer });
-    } catch (error: any) {
-        res.status(500).json({ message: error.message });
-    }
-}
 
 let author: any;
 export function PostProduct(req: Request, res: Response) {
@@ -320,5 +302,34 @@ export async function GetAllUsers(req: Request, res: Response) {
         res.status(200).json({ message: Users });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
+    }
+}
+
+let name: any = []
+let id: any = []
+export async function PostGame(req: Request, res: Response) {
+    try {
+        name = req.body.name
+        id = req.body.id
+        if (req.body.name !== undefined) {
+            return res.status(200).json({ message: "Good!" })
+        } else {
+            res.status(204).json({ message: "Get out!" })
+        }
+    } catch (error: any) {
+        res.status(500).json({ message: error.message, Message: "You have an error in Posting Game" })
+    }
+}
+
+export async function GetGame(req: Request, res: Response) {
+    try {
+        if (name !== undefined) {
+            const Gamer = (await pool.query(`SELECT * FROM games WHERE name = $1 AND myid = $2`, [name, id])).rows
+            return res.status(200).json({ message: Gamer })
+        } else {
+            res.status(204).json({ meessage: "Get Out!" })
+        }
+    } catch (error: any) {
+        res.status(204).json({ message: "You have an error in Getting Game!" })
     }
 }

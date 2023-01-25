@@ -58,3 +58,16 @@ VALUES
         '+919928473',
         '2'
     );
+
+CREATE TABLE Games (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    Gamename TEXT NOT NULL,
+    max DECIMAL NOT NULL,
+    myid DECIMAL NOT NULL,
+    name TEXT NOT NULL
+);
+
+INSERT INTO
+    Games (Gamename, max, myid,name)
+VALUES
+    ('Snake Henzie', 10, 1, 'Xasanboy');

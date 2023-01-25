@@ -17,14 +17,17 @@ import {
   PostShoppingId,
   GetShopping,
   PostGame,
-  GetGame,
   PostProduct,
   GetProduct,
   PostCreateProduct,
   PostBasket,
   GetBasket,
-  GetAllUsers
+  GetAllUsers,
+  GetGame
 } from "./src/functions";
+import {
+  PostMath,
+} from "./src/games";
 
 const server = express();
 const PORT = 8080;
@@ -73,10 +76,6 @@ server.post("/shopping/:id", PostShoppingId);
 
 server.get("/shopping", GetShopping);
 
-// For Game
-server.post("/game", PostGame);
-
-server.get("/game", GetGame);
 
 // For me to Author
 server.post("/product", PostProduct);
@@ -93,6 +92,11 @@ server.get("/basket", GetBasket);
 
 // Get All Users
 server.get("/allUsers", GetAllUsers);
+
+// Post to Game 
+server.post("/game", PostGame)
+
+server.get('/game', GetGame)
 
 server.listen(PORT, () => {
   console.log(`Server: http://localhost:${PORT}`);
