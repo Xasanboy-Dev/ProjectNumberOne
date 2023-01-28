@@ -1,7 +1,17 @@
 # ProjectNumberOne
 Project Number One
 
-```js
-import fecth from 'fetch'
+```ts
+import express from 'express'
+const server = express()
+const PORT = 8080
+
+
+
+
+
+
+server.listen(PORT,()=>{
+console.log(`SERVER: http://localhost:${PORT}`)
+})
 ```
-How are you my friend? 
