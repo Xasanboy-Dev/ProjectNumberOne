@@ -32,3 +32,10 @@ export function CheckingLogin(req: Request, res: Response, next: any) {
   }
   next();
 }
+
+export function CheckingUser(req:Request,res:Response,next:any){
+  if(!req.headers.authorization){
+    return res.status(500).json({message:"Please login."})
+  }
+  next()
+}

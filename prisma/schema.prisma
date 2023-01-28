@@ -16,4 +16,5 @@ model Ussers {
   lastname String
   email    String @unique
   password String
+  hashed   String @unique
 }
