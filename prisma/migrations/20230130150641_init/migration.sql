@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "likes" SET DEFAULT ARRAY[1, 2]::INTEGER[];

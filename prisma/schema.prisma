@@ -10,11 +10,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Ussers {
-  id       Int    @id @default(autoincrement())
-  name     String
-  lastname String
-  email    String @unique
-  password String
-  hashed   String @unique
+model User {
+  id                 Int      @id @default(autoincrement())
+  name               String
+  lastname           String
+  email              String   @unique
+  password           String
+  hashed             String   @unique
+  role               String   @default("USER")
+  likes              Int[]    @default([1, 2])
+  my_created_product String[] 
+}
+
+model Products {
+  id   Int      @id @default(autoincrement())
+  name String[]
+}
+
+model ProductName {
+  id          Int     @id @default(autoincrement())
+  name        String?
+  price       Int
+  description String
+  author      Int
+  number      String?
+  star        Int     @default(5)
 }
