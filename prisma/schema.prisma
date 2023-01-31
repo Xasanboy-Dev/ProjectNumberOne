@@ -19,7 +19,7 @@ model User {
   hashed             String   @unique
   role               String   @default("USER")
   likes              Int[]    @default([1, 2])
-  my_created_product String[] 
+  my_created_product String[]
 }
 
 model Products {
@@ -27,7 +27,7 @@ model Products {
   name String[]
 }
 
-model ProductName {
+model Type_Of_Product {
   id          Int     @id @default(autoincrement())
   name        String?
   price       Int

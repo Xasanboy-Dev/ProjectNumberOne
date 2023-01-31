@@ -17,8 +17,10 @@ import {
   UserToAdmin,
   Get_All_Products,
   Add_Products,
-  Create_Type_Product
+  Create_Type_Product,
+  Create_A_New_Type_OF_Product
 } from "./Functions/function";
+import { prisma } from "@prisma/client";
 const server = express();
 const PORT = 8080;
 server.use(express.json());
@@ -48,6 +50,8 @@ server.post("/create_Product",
   Cheacking_Admin_For_Creating_Product,
   Checking_the_Product,
   Create_Type_Product)
+
+server.post('/Create_type',Create_A_New_Type_OF_Product)
 server.listen(PORT, () => {
   console.log(`SERVER: http://localhost:${PORT}`);
 });

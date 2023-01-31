@@ -8,7 +8,6 @@ export function CheckingAuth(req: Request, res: Response, next: any) {
   }
   next();
 }
-
 export function CheckingUserData(req: Request, res: Response, next: any) {
   const { name, lastname, email, password } = req.body;
   if (!name || !lastname || !email || !password) {

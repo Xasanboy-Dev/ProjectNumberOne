@@ -138,7 +138,7 @@ export async function Get_All_Products(req: Request, res: Response) {
 export async function Add_Products(req: Request, res: Response) {
   try {
     const body = req.body
-    const Created_Product = await prisma.productName.create({
+    const Created_Product = await prisma.type_Of_Product.create({
       data: body
     })
     res.status(201).json({ message: "Created Succesfully", Created_Product })
@@ -167,7 +167,7 @@ export async function Create_Type_Product(req: Request, res: Response) {
         id: body.author
       },
       data: {
-        my_created_product: JSON.stringify(body)
+        my_created_product: [JSON.stringify(body)]
       }
     })
     const Products = await prisma.products.create({
@@ -179,5 +179,28 @@ export async function Create_Type_Product(req: Request, res: Response) {
   } catch (error: any) {
     console.log(error)
     res.status(500).json({ message: "Error: Creating Type of Product!" })
+  }
+}
+
+export async function Create_A_New_Type_OF_Product(req: Request, res: Response) {
+  try {
+    type Body = {
+      name: string
+    }
+    const name: any = req.body.name
+
+    const Type = await prisma.products.findMany()
+  } catch (error: any) {
+    console.log(error)
+    res.status(500).json({ message: "Error: in Create_A_New_Type_OF_Product" })
+  }
+}
+export async function SearchedProduct(req: Request, res: Response) {
+  try {
+    const { name } = req.body
+    console.log(name)
+  } catch (error: any) {
+    console.log(error)
+    res.status(2000).json({ message: "Error: SearchedProduct " })
   }
 }
