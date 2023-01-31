@@ -56,27 +56,30 @@ export async function CheckAdmin(req: Request, res: Response, next: any) {
   }
 }
 
-export async function Checking_the_Product(req: Request, res: Response, next: any) {
+export async function Checking_Admin(req: Request, res: Response, next: any) {
   try {
-    type Product = {
-      name: string
-      price: number
-      description: string
-      author: number
-      number: number
+    const { id } = req.params
+    if (Number(id).toString() == 'NaN') {
+      return res.status(200).json({ message: "Please login!" })
     }
-    const body: Product = req.body
-    if (!body.author || !body.description || !body.name || !body.number || !body.price) {
-      return res.status(200).json({ message: "Please fill all the gaps!" })
+    const user = await prisma.user.findUnique({
+      where: {
+        id: +id
+      }
+    })
+    if (user!.role === "ADMIN") {
+
+      return next()
+
+    } else {
+      return res.status(200).json({ message: "You are not an ADMIN . You can't touch to  PRODUCT!" })
     }
-    next()
   } catch (error: any) {
     console.log(error)
-    res.status(500).json({ message: "Error: CHeking  Product!" })
+    res.status(500).json({ message: "Error in Checking Admin" })
   }
 }
-
-export async function Cheacking_Admin_For_Creating_Product(req: Request, res: Response, next: any) {
+export function Checking_Product(req: Request, res: Response, next: any) {
   try {
     type Body = {
       name: string
@@ -92,6 +95,16 @@ export async function Cheacking_Admin_For_Creating_Product(req: Request, res: Re
     next()
   } catch (error: any) {
     console.log(error)
-    res.status(500).json({ message: "Error: Cheacking_Admin_For_Creating_Product " })
+    res.status(500).json({ message: "Error in Checking Product!" })
+  }
+}
+
+export async function Checking_User(req: Request, res: Response, next: any) {
+  try {
+    console.log(req.body)
+
+  } catch (error: any) {
+    console.log(error)
+    res.status(500).json({ message: "Error  in Checking User" })
   }
 }

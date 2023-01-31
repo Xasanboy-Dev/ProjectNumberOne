@@ -5,8 +5,9 @@ import {
   CheckingUser,
   CheckingUserData,
   CheckAdmin,
-  Checking_the_Product,
-  Cheacking_Admin_For_Creating_Product
+  Checking_Admin,
+  Checking_Product,
+  Checking_User,
 } from "./Middlewares/middlewares";
 import {
   GetById,
@@ -15,10 +16,12 @@ import {
   PostUser,
   DeleteUser,
   UserToAdmin,
-  Get_All_Products,
-  Add_Products,
-  Create_Type_Product,
-  Create_A_New_Type_OF_Product
+  Get_Products,
+  creating_Product,
+  Deleting_Product,
+  Patch_Product,
+  Get_Basket,
+  Post_Basket_Product,
 } from "./Functions/function";
 import { prisma } from "@prisma/client";
 const server = express();
@@ -42,16 +45,25 @@ server.post('/admin/:id', UserToAdmin)
 
 //           Products 
 
-server.get('/products', Get_All_Products)
+server.get("/product", Get_Products)
 
-server.post('/products', Checking_the_Product, Add_Products)
+server.post("/product/:id", Checking_Admin,
+  Checking_Product, creating_Product)
 
-server.post("/create_Product",
-  Cheacking_Admin_For_Creating_Product,
-  Checking_the_Product,
-  Create_Type_Product)
+server.delete("/product/:id", Checking_Admin, Deleting_Product)
 
-server.post('/Create_type',Create_A_New_Type_OF_Product)
+
+server.patch("/product/:id", Checking_Admin, Patch_Product)
+
+//           Basket
+
+server.get("/basket/:user", CheckingUser, Get_Basket)
+
+server.post("/basket/:user", CheckingUser, Post_Basket_Product)
+
 server.listen(PORT, () => {
   console.log(`SERVER: http://localhost:${PORT}`);
 });
+
+// adburasulovhasanboy2
+// 9311672812

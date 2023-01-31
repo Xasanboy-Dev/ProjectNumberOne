@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
+import bcrypt, { compareSync } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
@@ -124,31 +124,17 @@ export async function UserToAdmin(req: Request, res: Response) {
   }
 }
 
-export async function Get_All_Products(req: Request, res: Response) {
+export async function Get_Products(req: Request, res: Response) {
   try {
-    const Products = await prisma.products.findMany()
-    res.status(200).json({ message: "All Products", Products })
+    const products = await prisma.products.findMany()
+    res.status(200).json({ message: products })
   } catch (error: any) {
     console.log(error)
-    res.status(500).json({ message: "Error: Get All Products" })
+    res.status(500).json({ message: "Error in Getting all Products!" })
   }
 }
 
-
-export async function Add_Products(req: Request, res: Response) {
-  try {
-    const body = req.body
-    const Created_Product = await prisma.type_Of_Product.create({
-      data: body
-    })
-    res.status(201).json({ message: "Created Succesfully", Created_Product })
-  } catch (error: any) {
-    console.log(error)
-    res.status(200).json({ message: "Error: Adding a new Product!" })
-  }
-}
-
-export async function Create_Type_Product(req: Request, res: Response) {
+export async function creating_Product(req: Request, res: Response) {
   try {
     type Body = {
       name: string
@@ -158,49 +144,100 @@ export async function Create_Type_Product(req: Request, res: Response) {
       number: string
     }
     const body: Body = req.body
-    const User = await prisma.user.findUnique({ where: { id: body.author } })
-    if (!User) {
-      return res.status(200).json({ message: "Please Login and then try again!" })
-    }
-    const Updated_User = await prisma.user.updateMany({
-      where: {
-        id: body.author
-      },
+    const Created_Product = await prisma.products.create({
       data: {
-        my_created_product: [JSON.stringify(body)]
+        name: body.name,
+        author: body.author,
+        description: body.description,
+        price: body.price,
+        number: body.number,
       }
     })
-    const Products = await prisma.products.create({
-      data: {
-        name: ["Fruits"]
-      }
-    })
-    console.log([Updated_User, Products])
+    res.status(201).json({ message: "Created!", Created_Product })
   } catch (error: any) {
     console.log(error)
-    res.status(500).json({ message: "Error: Creating Type of Product!" })
+    res.status(500).json({ message: "Error in Creatin Product!" })
   }
 }
 
-export async function Create_A_New_Type_OF_Product(req: Request, res: Response) {
+export async function Deleting_Product(req: Request, res: Response) {
+  try {
+    const { remove } = req.body
+    const Deleted_Product = await prisma.products.delete({
+      where: {
+        id: remove
+      }
+    })
+    res.status(200).json({ message: "Deleted succesfully!", Deleted_Product })
+  } catch (error: any) {
+    console.log(error)
+    res.status(200).json({ message: "Error in Deleting Product" })
+  }
+}
+export async function Patch_Product(req: Request, res: Response) {
   try {
     type Body = {
       name: string
+      price: number
+      description: string
+      author: number
+      number: string
+      star: number
+      product: number
     }
-    const name: any = req.body.name
-
-    const Type = await prisma.products.findMany()
+    const body: Body = req.body
+    let product = body.product
+    const Selected_Product = await prisma.products.findUnique({ where: { id: product } })
+    if (!Selected_Product) {
+      return res.status(200).json({ message: "You can not edit the not exist Product!" })
+    }
+    const { author, name, price, description, number, star } = Selected_Product
+    const Updated_Product = await prisma.products.update({
+      where: {
+        id: product
+      },
+      data: {
+        author: body.author ? body.author : author,
+        description: body.description ? body.description : description,
+        name: body.name ? body.name : name,
+        number: body.number ? body.number : number,
+        price: body.price ? body.price : price,
+        star: body.star ? body.star : star
+      }
+    })
+    res.status(200).json({ message: "Updated succesfuly!", Updated_Product })
   } catch (error: any) {
     console.log(error)
-    res.status(500).json({ message: "Error: in Create_A_New_Type_OF_Product" })
+    res.status(500).json({ message: "Error in Editing Product!" })
   }
 }
-export async function SearchedProduct(req: Request, res: Response) {
+
+//        Basket
+export async function Get_Basket(req: Request, res: Response) {
   try {
-    const { name } = req.body
-    console.log(name)
+    const { user } = req.params
+    const USER = await prisma.user.findUnique({ where: { id: +user } })
+    console.log(USER!.basket)
   } catch (error: any) {
     console.log(error)
-    res.status(2000).json({ message: "Error: SearchedProduct " })
+    res.status(500).json({ message: "Error in Getting Basket" })
+  }
+}
+export async function Post_Basket_Product(req: Request, res: Response) {
+  try {
+    const { id } = req.body
+    const user = req.params.user
+    const added = await prisma.user.update({
+      where: {
+        id: +user
+      },
+      data: {
+        basket: id
+      }
+    })
+    console.log(added)
+  } catch (error: any) {
+    console.log(error)
+    res.status(500).json({ message: "Error in adding a product to Basket!" })
   }
 }
