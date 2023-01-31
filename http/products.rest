@@ -1,0 +1,38 @@
+# Get All Products
+GET http://localhost:8080/product HTTP/1.1
+Authorization: Hello World
+
+###
+POST http://localhost:8080/product/1
+Content-Type: application/json
+Authorization: Hello World
+
+{
+    "name":"Phone",
+    "price":120,
+    "description":"Very Fast",
+    "author":5,
+    "number":"Electronics"
+}
+
+###
+DELETE http://localhost:8080/product/5
+Content-Type: application/json
+
+{
+    "remove":20
+}
+
+###
+PATCH  http://localhost:8080/product/5
+Content-Type: application/json
+
+{
+    "product":21,
+    "name":"Phone",
+    "price":120,
+    "description":"Very Fast",
+    "author":5,
+    "number":"Electronics"
+}
+    

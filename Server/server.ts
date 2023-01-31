@@ -22,6 +22,7 @@ import {
   Patch_Product,
   Get_Basket,
   Post_Basket_Product,
+  delete_Basket_Product,
 } from "./Functions/function";
 import { prisma } from "@prisma/client";
 const server = express();
@@ -37,29 +38,29 @@ server.post("/user/register", CheckingUserData, PostUser);
 
 server.post("/user/login", CheckingLogin, Login);
 
-server.get("/user/:id", CheckingUser, GetById)
+server.get("/user/:id", CheckingUser, GetById);
 
-server.delete("/user/:ids", CheckAdmin, DeleteUser)
+server.delete("/user/:ids", CheckAdmin, DeleteUser);
 
-server.post('/admin/:id', UserToAdmin)
+server.post("/admin/:id", UserToAdmin);
 
-//           Products 
+//           Products
 
-server.get("/product", Get_Products)
+server.get("/product", Get_Products);
 
-server.post("/product/:id", Checking_Admin,
-  Checking_Product, creating_Product)
+server.post("/product/:id", Checking_Admin, Checking_Product, creating_Product);
 
-server.delete("/product/:id", Checking_Admin, Deleting_Product)
+server.delete("/product/:id", Checking_Admin, Deleting_Product);
 
-
-server.patch("/product/:id", Checking_Admin, Patch_Product)
+server.patch("/product/:id", Checking_Admin, Patch_Product);
 
 //           Basket
 
-server.get("/basket/:user", CheckingUser, Get_Basket)
+server.get("/basket/:user", CheckingUser, Get_Basket);
 
-server.post("/basket/:user", CheckingUser, Post_Basket_Product)
+server.post("/basket/:user", CheckingUser, Post_Basket_Product);
+
+server.delete("/basket/:user", Checking_User, delete_Basket_Product);
 
 server.listen(PORT, () => {
   console.log(`SERVER: http://localhost:${PORT}`);

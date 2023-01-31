@@ -36,75 +36,85 @@ export function CheckingLogin(req: Request, res: Response, next: any) {
 
 export function CheckingUser(req: Request, res: Response, next: any) {
   if (!req.headers.authorization) {
-    return res.status(500).json({ message: "Please login." })
+    return res.status(500).json({ message: "Please login." });
   }
-  next()
+  next();
 }
 
 export async function CheckAdmin(req: Request, res: Response, next: any) {
   try {
-    const { id } = req.body
-    const { ids } = req.params
-    const user = await prisma.user.findUnique({ where: { id: +id } })
+    const { id } = req.body;
+    const { ids } = req.params;
+    const user = await prisma.user.findUnique({ where: { id: +id } });
     if (user!.role !== "ADMIN") {
-      return res.status(200).json({ message: "You aren't ADMIN. Only admins can delete!" })
+      return res
+        .status(200)
+        .json({ message: "You aren't ADMIN. Only admins can delete!" });
     }
-    next()
+    next();
   } catch (error: any) {
-    console.log(error)
-    res.status(500).json({ message: "Error in Checking Admin" })
+    console.log(error);
+    res.status(500).json({ message: "Error in Checking Admin" });
   }
 }
 
 export async function Checking_Admin(req: Request, res: Response, next: any) {
   try {
-    const { id } = req.params
-    if (Number(id).toString() == 'NaN') {
-      return res.status(200).json({ message: "Please login!" })
+    const { id } = req.params;
+    if (Number(id).toString() == "NaN") {
+      return res.status(200).json({ message: "Please login!" });
     }
     const user = await prisma.user.findUnique({
       where: {
-        id: +id
-      }
-    })
+        id: +id,
+      },
+    });
     if (user!.role === "ADMIN") {
-
-      return next()
-
+      return next();
     } else {
-      return res.status(200).json({ message: "You are not an ADMIN . You can't touch to  PRODUCT!" })
+      return res.status(200).json({
+        message: "You are not an ADMIN . You can't touch to  PRODUCT!",
+      });
     }
   } catch (error: any) {
-    console.log(error)
-    res.status(500).json({ message: "Error in Checking Admin" })
+    console.log(error);
+    res.status(500).json({ message: "Error in Checking Admin" });
   }
 }
 export function Checking_Product(req: Request, res: Response, next: any) {
   try {
     type Body = {
-      name: string
-      price: number
-      description: string
-      author: number
-      number: string
+      name: string;
+      price: number;
+      description: string;
+      author: number;
+      number: string;
+    };
+    const body: Body = req.body;
+    if (
+      !body.author ||
+      !body.description ||
+      !body.name ||
+      !body.number ||
+      !body.price
+    ) {
+      return res.status(200).json({ message: "Please fill all the gaps!" });
     }
-    const body: Body = req.body
-    if (!body.author || !body.description || !body.name || !body.number || !body.price) {
-      return res.status(200).json({ message: "Please fill all the gaps!" })
-    }
-    next()
+    next();
   } catch (error: any) {
-    console.log(error)
-    res.status(500).json({ message: "Error in Checking Product!" })
+    console.log(error);
+    res.status(500).json({ message: "Error in Checking Product!" });
   }
 }
 
 export async function Checking_User(req: Request, res: Response, next: any) {
   try {
-    console.log(req.body)
-
+    if (!req.headers.authorization) {
+      return res.status(200).json({ message: "Please Login!" });
+    }
+    next();
   } catch (error: any) {
-    console.log(error)
-    res.status(500).json({ message: "Error  in Checking User" })
+    console.log(error);
+    res.status(500).json({ message: "Error  in Checking User" });
   }
 }
