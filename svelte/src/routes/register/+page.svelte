@@ -1,73 +1,128 @@
-<section class="vh-100" style="background-color: #eee;">
+<script lang="ts">
+	import { emailValidator, passwordVaidator } from '../login/functions';
+	import axios from 'axios';
+	import bcrypt from 'bcrypt';
+	let name: string;
+	let lastname: string;
+	let email: string;
+	let password: string;
+
+	function clicked(emails: boolean, pass: boolean) {
+		let passwords = bcrypt.hash(password, 7);
+		console.log(passwords);
+		const USER: any = { name, lastname };
+		if (emails && pass) {
+			if (!name || !lastname) {
+				alert('Please fill all the gaps!');
+			} else {
+				axios
+					.post('http://localhost:8080/user/register', { name, lastname, password, email })
+					.then((res) => {
+						if (res.status == 201) {
+							alert(res.data.message);
+						} else if (res.status == 500) {
+							alert('Your account is already exist!');
+						}
+					})
+					.catch((e) => {
+						console.log(e.message);
+					});
+			}
+		} else {
+			if (!email) {
+				return alert('Your email is not valid!');
+			}
+			alert("Your password isn't valid!");
+		}
+	}
+</script>
+
+<section class="vh-100" style="background-color: #2779e2;">
 	<div class="container h-100">
 		<div class="row d-flex justify-content-center align-items-center h-100">
-			<div class="col-lg-12 col-xl-11">
-				<div class="card text-black" style="border-radius: 25px;">
-					<div class="card-body p-md-5">
-						<div class="row justify-content-center">
-							<div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-								<p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-
-								<form class="mx-1 mx-md-4">
-									<div class="d-flex flex-row align-items-center mb-4">
-										<i class="fas fa-user fa-lg me-3 fa-fw" />
-										<div class="form-outline flex-fill mb-0">
-											<input type="text" id="form3Example1c" class="form-control" />
-											<label class="form-label" for="form3Example1c">Your Name</label>
-										</div>
-									</div>
-
-									<div class="d-flex flex-row align-items-center mb-4">
-										<i class="fas fa-envelope fa-lg me-3 fa-fw" />
-										<div class="form-outline flex-fill mb-0">
-											<input type="email" id="form3Example3c" class="form-control" />
-											<label class="form-label" for="form3Example3c">Your Email</label>
-										</div>
-									</div>
-
-									<div class="d-flex flex-row align-items-center mb-4">
-										<i class="fas fa-lock fa-lg me-3 fa-fw" />
-										<div class="form-outline flex-fill mb-0">
-											<input type="password" id="form3Example4c" class="form-control" />
-											<label class="form-label" for="form3Example4c">Password</label>
-										</div>
-									</div>
-
-									<div class="d-flex flex-row align-items-center mb-4">
-										<i class="fas fa-key fa-lg me-3 fa-fw" />
-										<div class="form-outline flex-fill mb-0">
-											<input type="password" id="form3Example4cd" class="form-control" />
-											<label class="form-label" for="form3Example4cd">Repeat your password</label>
-										</div>
-									</div>
-
-									<div class="form-check d-flex justify-content-center mb-5">
-										<input
-											class="form-check-input me-2"
-											type="checkbox"
-											value=""
-											id="form2Example3c"
-										/>
-										<label class="form-check-label" for="form2Example3">
-											I agree all statements in <a href="#!">Terms of service</a>
-										</label>
-									</div>
-
-									<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-										<button type="button" class="btn btn-primary btn-lg">Register</button>
-									</div>
-								</form>
+			<div class="col-xl-9">
+				<form action="">
+					<div class="d-flex justify-content-center">
+						<h1 class="text-white mb-4">Apply for a job</h1>
+					</div>
+					<div class="card" style="border-radius: 15px;">
+						<div class="card-body">
+							<div class="row align-items-center pt-4 pb-3">
+								<div class="col-md-3 ps-5">
+									<h6 class="mb-0">First name</h6>
+								</div>
+								<div class="col-md-9 pe-5">
+									<input
+										required
+										type="text"
+										bind:value={name}
+										class="form-control form-control-lg"
+									/>
+								</div>
 							</div>
-							<div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-								<img
-									src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-									class="img-fluid"
-									alt="Sample image"
-								/>
+							<hr class="mx-n3" />
+
+							<div class="row align-items-center pt-4 pb-3">
+								<div class="col-md-3 ps-5">
+									<h6 class="mb-0">Last name</h6>
+								</div>
+								<div class="col-md-9 pe-5">
+									<input
+										required
+										type="text"
+										bind:value={lastname}
+										class="form-control form-control-lg"
+									/>
+								</div>
+							</div>
+
+							<hr class="mx-n3" />
+
+							<div class="row align-items-center py-3">
+								<div class="col-md-3 ps-5">
+									<h6 class="mb-0">Email address</h6>
+								</div>
+								<div class="col-md-9 pe-5">
+									<input
+										required
+										bind:value={email}
+										type="email"
+										class="form-control form-control-lg"
+										placeholder="example@example.com"
+									/>
+								</div>
+							</div>
+							<hr class="mx-n3" />
+							<div class="row align-items-center py-3">
+								<div class="col-md-3 ps-5">
+									<h6 class="mb-0">Password</h6>
+								</div>
+								<div class="col-md-9 pe-5">
+									<input
+										required
+										bind:value={password}
+										type="password"
+										class="form-control form-control-lg"
+										placeholder="1234546789..."
+									/>
+								</div>
+							</div>
+							<hr class="mx-n3" />
+							<!-- svelte-ignore a11y-click-events-have-key-events -->
+							<div
+								on:click={() => clicked(emailValidator(email), passwordVaidator(password))}
+								class="px-5  py-4 d-flex justify-content-center"
+							>
+								<button type="submit" class="btn btn-primary btn-lg">Send application</button>
+							</div>
+							<div class="d-flex   justify-content-center text-decoration-none">
+								<a href="/login">
+									<p>For <a href="/login" class="text-decoration-none">login</a></p>
+								</a>
 							</div>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>

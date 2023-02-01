@@ -1,9 +1,9 @@
 # Get All Products
 GET http://localhost:8080/product HTTP/1.1
-Authorization: Hello World
+Authorization: $2b$07$E7Z4A8XCBchVRDs5c2NYTOPp5m4x19J35gjCi4emNOCZheoCuMhw6
 
 ###
-POST http://localhost:8080/product/1
+POST http://localhost:8080/product/10
 Content-Type: application/json
 Authorization: Hello World
 

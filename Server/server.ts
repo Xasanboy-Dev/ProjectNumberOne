@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors"
 import {
   CheckingAuth,
   CheckingLogin,
@@ -8,6 +9,7 @@ import {
   Checking_Admin,
   Checking_Product,
   Checking_User,
+  CheckUserExist,
 } from "./Middlewares/middlewares";
 import {
   GetById,
@@ -24,9 +26,9 @@ import {
   Post_Basket_Product,
   delete_Basket_Product,
 } from "./Functions/function";
-import { prisma } from "@prisma/client";
 const server = express();
 const PORT = 8080;
+server.use(cors())
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
@@ -34,9 +36,9 @@ server.use(express.urlencoded({ extended: true }));
 
 server.get("/user", CheckingAuth, GetUsers);
 
-server.post("/user/register", CheckingUserData, PostUser);
+server.post("/user/register", CheckUserExist);
 
-server.post("/user/login", CheckingLogin, Login);
+server.post("/user/login", Login);
 
 server.get("/user/:id", CheckingUser, GetById);
 

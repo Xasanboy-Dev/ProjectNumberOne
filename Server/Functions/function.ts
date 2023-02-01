@@ -27,11 +27,13 @@ export async function PostUser(req: Request, res: Response) {
       email,
       password: hello,
       hashed: hashObject,
+      my_created_product: [],
+      basket: []
     };
     const createdUser = await prisma.user.create({
       data: newUser,
     });
-    res.status(200).json(createdUser);
+    res.status(201).json({ message: "Created", createdUser });
   } catch (error: any) {
     console.log(error);
     res.status(500).json({ message: "Error: Posting User" });
@@ -40,27 +42,21 @@ export async function PostUser(req: Request, res: Response) {
 
 export async function Login(req: Request, res: Response) {
   try {
-    const { name, lastname, email, password } = req.body;
-
+    const { email, password } = req.body;
     const user = await prisma.user.findUnique({
       where: {
         email: email,
       },
     });
-
-    if (user) {
-      const text = await jwt.verify(user.password, SECRET_WORD);
-      const bool = await bcrypt.compareSync(
-        password.toString(),
-        text.toString()
-      );
-      if (bool) {
-        return res.status(200).json({ message: "Welcome to your dashboard!" });
-      } else {
-        return res.status(200).json({ message: "Please check your data!" });
-      }
+    if (!user) {
+      return res.status(201).json({ message: "Your account isn't exist!" })
     }
-    res.status(200).json({ message: "Not Found!" });
+    const pass = jwt.verify(user.password, "SECRET")
+    const pass2 = bcrypt.compareSync(password.toString(), pass.toString())
+    if (!pass2) {
+      return res.status(201).json({ message: "Your account isn't exist or incorrect data!" })
+    }
+    res.status(200).json({ message: "DATA", user })
   } catch (error: any) {
     console.log(error);
     res.status(500).json({ message: "Error: Login Posting" });

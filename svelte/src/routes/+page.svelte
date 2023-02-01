@@ -1,0 +1,10 @@
+<div>
+	<ul>
+		<li>
+			<a href="/register">Registration</a>
+		</li>
+        <li>
+			<a href="/login">Login</a>
+		</li>
+	</ul>
+</div>

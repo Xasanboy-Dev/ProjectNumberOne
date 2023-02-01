@@ -2,23 +2,37 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { Request, Response } from "express";
 
-export function CheckingAuth(req: Request, res: Response, next: any) {
+export async function CheckingAuth(req: Request, res: Response, next: any) {
   if (!req.headers.authorization) {
+    return res.status(200).json({ message: "You must login please!" });
+  }
+  const USER = await prisma.user.findMany({ where: { hashed: req.headers.authorization } })
+  if (USER.length == 0) {
     return res.status(200).json({ message: "You must login please!" });
   }
   next();
 }
-export function CheckingUserData(req: Request, res: Response, next: any) {
-  const { name, lastname, email, password } = req.body;
-  if (!name || !lastname || !email || !password) {
-    return res.status(200).json({ message: "Please fill all the gaps!" });
+export async function CheckingUserData(req: Request, res: Response, next: any) {
+  if (!req.headers.authorization) {
+    return res.status(200).json({ message: "Please login and try again!" })
+  } else {
+    const ADMIN = await prisma.user.findMany({ where: { hashed: req.headers.authorization } })
+    const { role } = ADMIN[0] ? ADMIN[0] : { role: "Not Given" }
+    if (role !== "ADMIN") {
+      return res.status(200).json({ message: "You are not an ADMIN" })
+    } else {
+      const { name, lastname, email, password } = req.body;
+      if (!name || !lastname || !email || !password) {
+        return res.status(200).json({ message: "Please fill all the gaps!" });
+      }
+      if (password.toString().length < 4 || password.toString().length > 10) {
+        return res.status(200).json({
+          mesage: "Length of password Min:4 ,Max:10 || PLaese check your password",
+        });
+      }
+      next();
+    }
   }
-  if (password.toString().length < 4 || password.toString().length > 10) {
-    return res.status(200).json({
-      mesage: "Length of password Min:4 ,Max:10 || PLaese check your password",
-    });
-  }
-  next();
 }
 
 export function CheckingLogin(req: Request, res: Response, next: any) {
@@ -35,10 +49,11 @@ export function CheckingLogin(req: Request, res: Response, next: any) {
 }
 
 export function CheckingUser(req: Request, res: Response, next: any) {
-  if (!req.headers.authorization) {
-    return res.status(500).json({ message: "Please login." });
+  const auth = req.headers.authorization
+  if (!auth) {
+    return res.status(200).json({ message: "You haven't got an account. You must register!" })
   }
-  next();
+  next()
 }
 
 export async function CheckAdmin(req: Request, res: Response, next: any) {
@@ -116,5 +131,16 @@ export async function Checking_User(req: Request, res: Response, next: any) {
   } catch (error: any) {
     console.log(error);
     res.status(500).json({ message: "Error  in Checking User" });
+  }
+}
+
+
+export async function CheckUserExist(req: Request, res: Response, next: any) {
+  const email: string = req.body.email
+  const USER = await prisma.user.findUnique({ where: { email: email } })
+  if (!USER) {
+    next()
+  } else {
+    return res.status(200).json({message:"Your account is already"})
   }
 }

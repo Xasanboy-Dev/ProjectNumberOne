@@ -1,16 +1,18 @@
 GET http://localhost:8080/user HTTP/1.1
-Authorization: $2b$07$7oAwFQrfKboUT6xdVCH9Au8PcQifhYtyzoWC.eZRzeuAlt6HYAK3G
+Authorization:$2b$07$rRDj6ZfyFW5lVi0hpgysC.bJzEWQTeNlIl.zHWaxqXRVWgt/61Kdy
 
 
 ### 
 POST http://localhost:8080/user/register HTTP/1.1
 Content-Type: application/json
+Authorization:$2b$07$E7Z4A8XCBchVRDs5c2NYTOPp5m4x19J35gjCi4emNOCZheoCuMhw6
+
 
 {
-    "name":"Otabek",
-    "lastname":"Isnaddinov",
-    "email":"otabek309@gmail.com",
-    "password":12345
+    "name":"Xasanboy",
+    "lastname":"Abdurasulov",
+    "email":"Xasan@gmail.com",
+    "password":1234
 }
 
 ###
@@ -18,10 +20,8 @@ POST http://localhost:8080/user/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Xasanboy",
-    "lastname":"Abdurasulov",
-    "email":"otabek309@gmail.com",
-    "password":12345
+    "email":"Xasan@gmail.com",
+    "password":1234
 }
 
 ###
